@@ -43,7 +43,7 @@ def sign_request(key, query):
 
 
 def make_header(query_data, api_key, api_secret):
-    nonce = str(int(time.time() * 1000))
+    nonce = str(int(time.time() * 1000000))
     message = nonce + query_data
     return {
         'Content-Type': 'application/json',
