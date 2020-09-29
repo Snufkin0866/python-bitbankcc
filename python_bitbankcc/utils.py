@@ -23,6 +23,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+class BitbankAPIException(Exception):
+
+    def __init__(self, message) -> None:
+        super().__init__(message)
+        self.message = message
+
+
 def error_parser(json_dict):
     if json_dict['success'] == 1:
         return json_dict['data']
@@ -30,7 +37,7 @@ def error_parser(json_dict):
         code = str(json_dict['data']['code'])
         contents = ERROR_CODES[code] if code in ERROR_CODES else '不明なエラーです。サポートにお問い合わせ下さい'
         message = 'エラーコード: ' + code + ' 内容: ' + contents
-        raise Exception(message)
+        raise BitbankAPIException(message)
 
 ERROR_CODES = {
     '10000': 'URLが存在しません',
